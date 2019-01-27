@@ -1,0 +1,68 @@
+print("Hello brave soldier of StrikGuard, you have been assigned to a position in the royal great mines where your job is to mine stone for the empress! WHat an honor!")
+try:    name = str(input("What is your name")) #peli
+except: print("kirjoita oikea nimi")
+player_bal = 0
+player_xp = 0
+player_lvl = 0
+xp_gain = 1
+storedvalues = []
+def spacing():
+    x = 5
+    while x > 0:
+        print("")
+        x = x - 1
+def play():  # Main funktio
+    global s
+    global player_bal
+    global player_lvl
+    global player_xp
+    global storedvalues
+    print("you are able to save or load your progress anytime by typing it to the console")
+    try :choise = str(input("You see a boulder ahead of you type M to mine or S to sell or lastly B to check your balance you can also exit by typing exit")).upper()
+    except: print("opettele kirjoittamaan")
+    if choise == "M":
+        print("Congrationations" + name + "you mined a rock!", sep="")
+        s = s + 1 + 0.25 * player_lvl
+        print("you now have " + str(s) + "rocks", sep="")
+        player_xp = player_xp + xp_gain
+        print(name + "gained" + str(xp_gain) + "xp", sep="")
+        if player_xp > player_lvl**2 + 10:
+            player_lvl = player_lvl + 1
+            print("congratulations" + name + "you are now lvl" + str(player_lvl), sep="")
+            player_xp = 0
+        spacing()
+        return
+    if choise == "B":
+        print(name + "bal ==" + str(player_bal) ,sep="")
+        spacing()
+        return
+    if choise == "S":
+        player_bal = player_bal + s * 0.5
+        spacing()
+        print(name + "sold" + str(s) + "rocks", sep="")
+        s = 0
+    if choise == "EXIT":
+        exit()
+    if choise == "SAVE":
+        f = open("data.txt", "w+")
+        f.truncate(0)
+        f.write(str(player_bal))
+        f.write("\n")
+        f.write(str(player_xp))
+        f.write("\n")
+        f.write(str(player_lvl))
+        f.write("\n")
+        f.write(str(s))
+    if choise == "LOAD":
+
+        r = open("data.txt,", "r+")
+        storedvalues = r.readlines()
+        player_bal = int(storedvalues[0])
+        player_xp = int(storedvalues[1])
+        player_lvl = int(storedvalues[2])
+        s = int(storedvalues[3])
+        storedvalues = []
+
+s = 0
+for i in range(9999999):
+    play()
